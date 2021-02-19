@@ -6,11 +6,9 @@ The Graph exposes a GraphQL endpoint to query the events and entities within the
 
 Currently there are two subgraphs, but additional subgraphs can be added to this repo:
 
-1. **SwipeSwap**: Currently only has support for current MasterChef and MasterChefPool data: https://thegraph.com/explorer/subgraph/swipewallet/swipeswap
+1. **Swipe Swap**: Currently only has support for current Swap data: https://thegraph.com/explorer/subgraph/swipewallet/swipeswap
 
-2. **SwipeSwap-SubGraph-Fork** (on uniswap-fork branch): Indexes the SwipeSwap Factory, includes Price Data, Pricing, etc: https://thegraph.com/explorer/subgraph/zippoxer/swipeswap-subgraph-fork
-
-3. **Swipe Bar**: Indexes the SwipeBar, includes data related to the bar: https://thegraph.com/explorer/subgraph/swipewallet/swipe-bar
+2. **Swipe Masterchef**: Indexes the Masterchef data, includes data related to the bar: https://thegraph.com/explorer/subgraph/swipewallet/masterchef
 
 ## To setup and deploy
 
