@@ -20,13 +20,13 @@ dataSources:
         - Factory
       abis:
         - name: Factory
-          file: ../abi/UniswapV2Factory.json
+          file: ../abis/UniswapV2Factory.json
         - name: Pair
-          file: ../abi/UniswapV2Pair.json
+          file: ../abis/UniswapV2Pair.json
         - name: SwipeToken
-          file: ../abi/SwipeToken.json
+          file: ../abis/SwipeToken.json
         - name: ERC20
-          file: ../abi/ERC20.json
+          file: ../abis/ERC20.json
         - name: ERC20SymbolBytes
           file: ../abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
@@ -59,9 +59,9 @@ templates:
         - User
       abis:
         - name: Pair
-          file: ../abi/UniswapV2Pair.json
+          file: ../abis/UniswapV2Pair.json
         - name: Factory
-          file: ../abi/UniswapV2Factory.json
+          file: ../abis/UniswapV2Factory.json
       eventHandlers:
         - event: Mint(indexed address,uint256,uint256)
           handler: onMint
