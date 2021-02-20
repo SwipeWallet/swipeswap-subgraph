@@ -24,7 +24,7 @@
     "deploy:bar": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ swipewallet/swipe-bar subgraphs/bar.yaml",
     "deploy:exchange": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ techstreamp/ropsten-swipeswap subgraphs/exchange.yaml",
     "deploy:maker": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ swipewallet/swipe-maker subgraphs/maker.yaml",
-    "deploy:masterchef": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ swipewallet/masterchef subgraphs/masterchef.yaml",
+    "deploy:masterchef": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ techstreamp/ropsten-masterchef subgraphs/masterchef.yaml",
     "deploy:timelock": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ swipewallet/swipe-timelock subgraphs/timelock.yaml",
     "deploy:dexcandles": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ swipewallet/dexcandles subgraphs/dexcandles.yaml",
     "create-local": "graph create --node http://localhost:8020/ /swipewallet/swipeswap",

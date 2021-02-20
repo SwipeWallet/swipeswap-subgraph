@@ -79,11 +79,11 @@ export const SWIPESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x76ef7595f9
 
 export const USDT_ADDRESS = Address.fromString('0xb421716a0a1feed58bac7e0bbad54cb0d37c382e')
 
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
+export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(9686191)
 
 export const UNISWAP_FACTORY_ADDRESS = Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f')
 
-export const UNISWAP_SWIPE_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
+export const UNISWAP_SWIPE_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(9686191)
 
 export const UNISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852')
 
