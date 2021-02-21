@@ -8,7 +8,7 @@ dataSources:
     name: Factory
     network: ropsten
     source:
-      address: '0x983683b02741ab717d75715b21ff18e558496e98'
+      address: '0xc3abe5da15d89c3c13cfc4d4ae4f55b0e408e53e'
       abi: Factory
       startBlock: 9688631
     mapping:

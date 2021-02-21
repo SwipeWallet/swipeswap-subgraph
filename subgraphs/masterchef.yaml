@@ -8,7 +8,7 @@ dataSources:
     name: MasterChef
     network: ropsten
     source:
-      address: '0xda2873ea26f5b44c0b958a15fb9d77766c867336'
+      address: '0x267748fe0db99863e1d5448ef5b9442230c24789'
       abi: MasterChef
       startBlock: 9686191
     mapping:

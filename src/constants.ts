@@ -20,11 +20,11 @@ export const BIG_INT_ZERO = BigInt.fromI32(0)
 
 export const LOCKUP_POOL_NUMBER = BigInt.fromI32(29)
 
-export const FACTORY_ADDRESS = Address.fromString('0x983683b02741ab717d75715b21ff18e558496e98')
+export const FACTORY_ADDRESS = Address.fromString('0xc3abe5da15d89c3c13cfc4d4ae4f55b0e408e53e')
 
 export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
-export const MASTER_CHEF_ADDRESS = Address.fromString('0xda2873ea26f5b44c0b958a15fb9d77766c867336')
+export const MASTER_CHEF_ADDRESS = Address.fromString('0x267748fe0db99863e1d5448ef5b9442230c24789')
 
 export const SWIPE_BAR_ADDRESS = Address.fromString('0x8798249c2e607446efb7ad49ec89dd1865ff4272')
 
@@ -32,7 +32,7 @@ export const SWIPE_MAKER_ADDRESS = Address.fromString('0xe11fc0b43ab98eb91e98361
 
 export const SWIPE_TOKEN_ADDRESS = Address.fromString('0xd57022d5cb065505093e2c4bbf7d683d2335ab6a')
 
-export const SWIPE_USDT_PAIR_ADDRESS = Address.fromString('0x80acd65d71009961d46957040dc612e0bc12c562')
+export const SWIPE_USDT_PAIR_ADDRESS = Address.fromString('0xf4fa90f0bc7e767e283eb79f45cde7d0e2318f7e')
 
 // export const XSWIPE_USDC_PAIR_ADDRESS = Address.fromString('0xd597924b16cc1904d808285bc9044fd51ceeead7')
 
@@ -40,16 +40,16 @@ export const SWIPE_USDT_PAIR_ADDRESS = Address.fromString('0x80acd65d71009961d46
 
 export const NULL_CALL_RESULT_VALUE = '0x0000000000000000000000000000000000000000000000000000000000000001'
 
-export const USDC_WETH_PAIR = '0xce1b14cbeb1c4665102eb63fcf3c20c5095f4633'
+export const USDC_WETH_PAIR = '0x650213faa833b518de00bae7239159fa1239ae2b'
 
-export const DAI_WETH_PAIR = '0x82a955556b1df5e90f12789a24670b6319161f6e'
+export const DAI_WETH_PAIR = '0xe9fe018e38723ae72261ab32d3edcddc74934c5e'
 
-export const USDT_WETH_PAIR = '0x76ef7595f9fc55b50b1d157ec5b50f00516d5b94'
+export const USDT_WETH_PAIR = '0xa58d9d47ff70ecd186d0f32e448e4ecf7f0d3cdd'
 
-export const SWIPE_USDT_PAIR = '0x80acd65d71009961d46957040dc612e0bc12c562'
+export const SWIPE_USDT_PAIR = '0xf4fa90f0bc7e767e283eb79f45cde7d0e2318f7e'
 
 export const WHITELIST: string[] = [
-  '0x5baaf4d574cc118cb5ee0b7e7d83a84520fb81c8', // WETH
+  '0xc778417e063141139fce010982780140aa0cd5ab', // WETH
   '0xa1a38b5e0dad12c4af73c6abfb8b3fd8ad621733', // DAI
   '0x005a31b9b305b8e63e3991cfb9943193432ec89b', // USDC
   '0xb421716a0a1feed58bac7e0bbad54cb0d37c382e', // USDT
@@ -73,15 +73,15 @@ export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString('0')
 // minimum liquidity for price to get tracked
 export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('0')
 
-export const WETH_ADDRESS = Address.fromString('0x5baaf4d574cc118cb5ee0b7e7d83a84520fb81c8')
+export const WETH_ADDRESS = Address.fromString('0xc778417e063141139fce010982780140aa0cd5ab')
 
-export const SWIPESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x76ef7595f9fc55b50b1d157ec5b50f00516d5b94')
+export const SWIPESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0xa58d9d47ff70ecd186d0f32e448e4ecf7f0d3cdd')
 
 export const USDT_ADDRESS = Address.fromString('0xb421716a0a1feed58bac7e0bbad54cb0d37c382e')
 
 export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(9686191)
 
-export const UNISWAP_FACTORY_ADDRESS = Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f')
+export const UNISWAP_FACTORY_ADDRESS = Address.fromString('0x9c83dCE8CA20E9aAF9D3efc003b2ea62aBC08351')
 
 export const UNISWAP_SWIPE_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(9686191)
 
