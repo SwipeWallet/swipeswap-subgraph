@@ -1,5 +1,5 @@
-# MasterChef
-type MasterChef @entity {
+# SwipeSwap
+type SwipeSwap @entity {
   # Contract address
   id: ID!
 
@@ -62,8 +62,8 @@ type History @entity {
   # Master chef id concatenated with timestamp
   id: ID!
 
-  # Owner (MasterChef, Pool, or User).
-  owner: MasterChef!
+  # Owner (SwipeSwap, Pool, or User).
+  owner: SwipeSwap!
 
   # SLP Balance
   slpBalance: BigDecimal!
@@ -89,11 +89,11 @@ type History @entity {
 
 # Pool
 type Pool @entity {
-  # Index of pool in poolInfo on MasterChef contract
+  # Index of pool in poolInfo on SwipeSwap contract
   id: ID!
 
   # Owner
-  owner: MasterChef!
+  owner: SwipeSwap!
 
   # Pair Liquidity Token Address
   pair: Bytes!

@@ -1,29 +1,29 @@
 specVersion: 0.0.3
-description: Masterchef
+description: SwipeSwap
 repository: https://github.com/SwipeWallet/swipeswap-subgraph
 schema:
-  file: ./masterchef.graphql
+  file: ./swipeswap.graphql
 dataSources:
   - kind: ethereum/contract
-    name: MasterChef
+    name: SwipeSwap
     network: ropsten
     source:
-      address: '0x267748fe0db99863e1d5448ef5b9442230c24789'
-      abi: MasterChef
-      startBlock: 9686191
+      address: '0x9b8a6f5a3631b144551006b1044737c6dd538f05'
+      abi: SwipeSwap
+      startBlock: 9759299
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - MasterChef
+        - SwipeSwap
         - History
         - Pool
         - PoolHistory
         - User
       abis:
-        - name: MasterChef
-          file: ../abis/MasterChef.json
+        - name: SwipeSwap
+          file: ../abis/SwipeSwap.json
         - name: Factory
           file: ../abis/UniswapV2Factory.json
         - name: Pair
@@ -54,4 +54,4 @@ dataSources:
           handler: migrate
         - function: dev(address)
           handler: dev
-      file: ../src/masterchef.ts
+      file: ../src/swipeswap.ts

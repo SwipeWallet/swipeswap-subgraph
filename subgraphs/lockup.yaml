@@ -5,11 +5,11 @@ schema:
   file: ./lockup.graphql
 dataSources:
   - kind: ethereum/contract
-    name: MasterChef
+    name: SwipeSwap
     network: mainnet
     source:
       address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd'
-      abi: MasterChef
+      abi: SwipeSwap
       startBlock: 10736242
     mapping:
       kind: ethereum/events
@@ -20,8 +20,8 @@ dataSources:
         - Pool
         - User
       abis:
-        - name: MasterChef
-          file: ../node_modules/@swipeswap/core/build/contracts/MasterChef.json
+        - name: SwipeSwap
+          file: ../node_modules/@swipeswap/core/build/contracts/SwipeSwap.json
         - name: Pair
           file: ../node_modules/@swipeswap/core/build/contracts/UniswapV2Pair.json
       eventHandlers:
