@@ -8,7 +8,7 @@ dataSources:
     name: SwipeSwap
     network: ropsten
     source:
-      address: '0x267748fe0db99863e1d5448ef5b9442230c24789'
+      address: '0x9b8a6f5a3631b144551006b1044737c6dd538f05'
       abi: SwipeSwap
       startBlock: 9759299
     mapping:
