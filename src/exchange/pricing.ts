@@ -36,7 +36,7 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
   // TODO: We can can get weighted averages, but this will do for now.
   // If block number is less than or equal to the last stablecoin migration (ETH-USDT), use uniswap eth price.
   // After this last migration, we can use swipeswap pricing.
-  if (block !== null && block.number.le(BigInt.fromI32(10829344))) {
+  if (block !== null && block.number.le(BigInt.fromI32(12009854))) {
     // Uniswap Factory
     const uniswapFactory = FactoryContract.bind(Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f'))
 
