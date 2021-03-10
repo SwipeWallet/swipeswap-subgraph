@@ -24,7 +24,7 @@ export const FACTORY_ADDRESS = Address.fromString('0xc0aee478e3658e2610c5f7a4a2e
 
 export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
-export const MASTER_CHEF_ADDRESS = Address.fromString('0xc2edad668740f1aa35e4d8f227fb8e17dca888cd')
+export const SWIPE_SWAP_ADDRESS = Address.fromString('0xc2edad668740f1aa35e4d8f227fb8e17dca888cd')
 
 export const SWIPE_BAR_ADDRESS = Address.fromString('0x8798249c2e607446efb7ad49ec89dd1865ff4272')
 
@@ -79,7 +79,7 @@ export const SWIPESWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString('0x06da0fd433
 
 export const USDT_ADDRESS = Address.fromString('0xdac17f958d2ee523a2206206994597c13d831ec7')
 
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
+export const SWIPE_SWAP_START_BLOCK = BigInt.fromI32(10750000)
 
 export const UNISWAP_FACTORY_ADDRESS = Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f')
 

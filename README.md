@@ -8,7 +8,7 @@ Currently there are two subgraphs, but additional subgraphs can be added to this
 
 1. **Swipe Swap**: Currently only has support for current Swap data: https://thegraph.com/explorer/subgraph/swipewallet/swipeswap
 
-2. **Swipe Masterchef**: Indexes the Masterchef data, includes data related to the bar: https://thegraph.com/explorer/subgraph/swipewallet/masterchef
+2. **Swipe Swipeswap**: Indexes the Swipeswap data, includes data related to the bar: https://thegraph.com/explorer/subgraph/swipewallet/swipeswap
 
 ## To setup and deploy
 
@@ -72,4 +72,4 @@ We will add to this as development progresses.
 # Community Subgraphs
 
 1) croco-finance fork of this repo with slight modifications - [deployment](https://thegraph.com/explorer/subgraph/benesjan/swipe-swap), [code](https://github.com/croco-finance/swipeswap-subgraph)
-2) croco-finance dex-rewards-subgraph which tracks SLPs in MasterChef and all the corresponding rewards individually. (can be used for analysis of user's positions) - [deployment](https://thegraph.com/explorer/subgraph/benesjan/dex-rewards-subgraph), [code](https://github.com/croco-finance/dex-rewards-subgraph)
+2) croco-finance dex-rewards-subgraph which tracks SLPs in SwipeSwap and all the corresponding rewards individually. (can be used for analysis of user's positions) - [deployment](https://thegraph.com/explorer/subgraph/benesjan/dex-rewards-subgraph), [code](https://github.com/croco-finance/dex-rewards-subgraph)

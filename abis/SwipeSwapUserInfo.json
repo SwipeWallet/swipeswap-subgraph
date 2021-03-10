@@ -113,7 +113,7 @@
   {
     "inputs": [
       { "internalType": "address", "name": "uniFactory_", "type": "address" },
-      { "internalType": "address", "name": "masterChef_", "type": "address" },
+      { "internalType": "address", "name": "swipeSwap_", "type": "address" },
       { "internalType": "address", "name": "swipe_", "type": "address" },
       { "internalType": "address", "name": "WETH_", "type": "address" }
     ],
