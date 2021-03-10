@@ -268,20 +268,20 @@ export function dev(call: DevCall): void {
 
 // Events
 export function deposit(event: Deposit): void {
-  // if (event.params.amount == BIG_INT_ZERO) {
-  //   log.info('Deposit zero transaction, input {} hash {}', [
-  //     event.transaction.input.toHex(),
-  //     event.transaction.hash.toHex(),
-  //   ])
-  // }
+  if (event.params.amount == BIG_INT_ZERO) {
+    log.info('Deposit zero transaction, input {} hash {}', [
+      event.transaction.input.toHex(),
+      event.transaction.hash.toHex(),
+    ])
+  }
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  // log.info('{} has deposited {} slp tokens to pool #{}', [
-  //   event.params.user.toHex(),
-  //   event.params.amount.toString(),
-  //   event.params.pid.toString(),
-  // ])
+  log.info('{} has deposited {} slp tokens to pool #{}', [
+    event.params.user.toHex(),
+    event.params.amount.toString(),
+    event.params.pid.toString(),
+  ])
 
   const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
@@ -425,20 +425,20 @@ export function deposit(event: Deposit): void {
 }
 
 export function withdraw(event: Withdraw): void {
-  // if (event.params.amount == BIG_INT_ZERO && User.load(event.params.user.toHex()) !== null) {
-  //   log.info('Withdrawal zero transaction, input {} hash {}', [
-  //     event.transaction.input.toHex(),
-  //     event.transaction.hash.toHex(),
-  //   ])
-  // }
+  if (event.params.amount == BIG_INT_ZERO && User.load(event.params.user.toHex()) !== null) {
+    log.info('Withdrawal zero transaction, input {} hash {}', [
+      event.transaction.input.toHex(),
+      event.transaction.hash.toHex(),
+    ])
+  }
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  // log.info('{} has withdrawn {} slp tokens from pool #{}', [
-  //   event.params.user.toHex(),
-  //   amount.toString(),
-  //   event.params.pid.toString(),
-  // ])
+  log.info('{} has withdrawn {} slp tokens from pool #{}', [
+    event.params.user.toHex(),
+    amount.toString(),
+    event.params.pid.toString(),
+  ])
 
   const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
@@ -471,16 +471,16 @@ export function withdraw(event: Withdraw): void {
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Withdraw: User amount is more than zero, we should harvest {} swipe - block: {}', [
-    //   pending.toString(),
-    //   event.block.number.toString(),
-    // ])
-    // log.info('SWIPE PRICE {}', [getSwipePrice(event.block).toString()])
+    log.info('Withdraw: User amount is more than zero, we should harvest {} swipe - block: {}', [
+      pending.toString(),
+      event.block.number.toString(),
+    ])
+    log.info('SWIPE PRICE {}', [getSwipePrice(event.block).toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SWIPE (CURRENT SWIPE PRICE {})', [
-      //   pending.toString(),
-      //   getSwipePrice(event.block).toString(),
-      // ])
+      log.info('Harvesting {} SWIPE (CURRENT SWIPE PRICE {})', [
+        pending.toString(),
+        getSwipePrice(event.block).toString(),
+      ])
       const swipeHarvestedUSD = pending.times(getSwipePrice(event.block))
       user.swipeHarvested = user.swipeHarvested.plus(pending)
       user.swipeHarvestedUSD = user.swipeHarvestedUSD.plus(swipeHarvestedUSD)
@@ -522,17 +522,17 @@ export function withdraw(event: Withdraw): void {
 
       poolHistory.exitUSD = pool.exitUSD
 
-      // log.info('User {} has withdrwn {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
-      //   user.address.toHex(),
-      //   amount.toString(),
-      //   token0Amount.toString(),
-      //   token0USD.toString(),
-      //   pairContract.token0().toHex(),
-      //   token1Amount.toString(),
-      //   token1USD.toString(),
-      //   pairContract.token1().toHex(),
-      //   exitUSD.toString(),
-      // ])
+      log.info('User {} has withdrwn {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
+        user.address.toHex(),
+        amount.toString(),
+        token0Amount.toString(),
+        token0USD.toString(),
+        pairContract.token0().toHex(),
+        token1Amount.toString(),
+        token1USD.toString(),
+        pairContract.token1().toHex(),
+        exitUSD.toString(),
+      ])
 
       user.exitUSD = user.exitUSD.plus(exitUSD)
     } else {
