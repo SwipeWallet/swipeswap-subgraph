@@ -4,14 +4,14 @@ import {
   DevCall,
   EmergencyWithdraw,
   MassUpdatePoolsCall,
-  MasterChef as MasterChefContract,
+  SwipeSwap as SwipeSwapContract,
   MigrateCall,
   OwnershipTransferred,
   SetCall,
   SetMigratorCall,
   UpdatePoolCall,
   Withdraw,
-} from '../generated/MasterChef/MasterChef'
+} from '../generated/SwipeSwap/SwipeSwap'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import {
   BIG_DECIMAL_1E12,
@@ -20,63 +20,63 @@ import {
   BIG_INT_ONE,
   BIG_INT_ONE_DAY_SECONDS,
   BIG_INT_ZERO,
-  MASTER_CHEF_ADDRESS,
-  MASTER_CHEF_START_BLOCK,
+  SWIPE_SWAP_ADDRESS,
+  SWIPE_SWAP_START_BLOCK,
 } from './constants'
-import { History, MasterChef, Pool, PoolHistory, User } from '../generated/schema'
+import { History, SwipeSwap, Pool, PoolHistory, User } from '../generated/schema'
 import { getSwipePrice, getUSDRate } from './price'
 
-import { ERC20 as ERC20Contract } from '../generated/MasterChef/ERC20'
-import { Pair as PairContract } from '../generated/MasterChef/Pair'
+import { ERC20 as ERC20Contract } from '../generated/SwipeSwap/ERC20'
+import { Pair as PairContract } from '../generated/SwipeSwap/Pair'
 
-function getMasterChef(block: ethereum.Block): MasterChef {
-  let masterChef = MasterChef.load(MASTER_CHEF_ADDRESS.toHex())
+function getSwipeSwap(block: ethereum.Block): SwipeSwap {
+  let swipeSwap = SwipeSwap.load(SWIPE_SWAP_ADDRESS.toHex())
 
-  if (masterChef === null) {
-    const contract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
-    masterChef = new MasterChef(MASTER_CHEF_ADDRESS.toHex())
-    masterChef.bonusMultiplier = contract.BONUS_MULTIPLIER()
-    masterChef.bonusEndBlock = contract.bonusEndBlock()
-    masterChef.devaddr = contract.devaddr()
-    masterChef.migrator = contract.migrator()
-    masterChef.owner = contract.owner()
+  if (swipeSwap === null) {
+    const contract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
+    swipeSwap = new SwipeSwap(SWIPE_SWAP_ADDRESS.toHex())
+    swipeSwap.bonusMultiplier = contract.BONUS_MULTIPLIER()
+    swipeSwap.bonusEndBlock = contract.bonusEndBlock()
+    swipeSwap.devaddr = contract.devaddr()
+    swipeSwap.migrator = contract.migrator()
+    swipeSwap.owner = contract.owner()
     // poolInfo ...
-    masterChef.startBlock = contract.startBlock()
-    masterChef.swipe = contract.swipe()
-    masterChef.swipePerBlock = contract.swipePerBlock()
-    masterChef.totalAllocPoint = contract.totalAllocPoint()
+    swipeSwap.startBlock = contract.startBlock()
+    swipeSwap.swipe = contract.swipe()
+    swipeSwap.swipePerBlock = contract.swipePerBlock()
+    swipeSwap.totalAllocPoint = contract.totalAllocPoint()
     // userInfo ...
-    masterChef.poolCount = BIG_INT_ZERO
+    swipeSwap.poolCount = BIG_INT_ZERO
 
-    masterChef.slpBalance = BIG_DECIMAL_ZERO
-    masterChef.slpAge = BIG_DECIMAL_ZERO
-    masterChef.slpAgeRemoved = BIG_DECIMAL_ZERO
-    masterChef.slpDeposited = BIG_DECIMAL_ZERO
-    masterChef.slpWithdrawn = BIG_DECIMAL_ZERO
+    swipeSwap.slpBalance = BIG_DECIMAL_ZERO
+    swipeSwap.slpAge = BIG_DECIMAL_ZERO
+    swipeSwap.slpAgeRemoved = BIG_DECIMAL_ZERO
+    swipeSwap.slpDeposited = BIG_DECIMAL_ZERO
+    swipeSwap.slpWithdrawn = BIG_DECIMAL_ZERO
 
-    masterChef.updatedAt = block.timestamp
+    swipeSwap.updatedAt = block.timestamp
 
-    masterChef.save()
+    swipeSwap.save()
   }
 
-  return masterChef as MasterChef
+  return swipeSwap as SwipeSwap
 }
 
 export function getPool(id: BigInt, block: ethereum.Block): Pool {
   let pool = Pool.load(id.toString())
 
   if (pool === null) {
-    const masterChef = getMasterChef(block)
+    const swipeSwap = getSwipeSwap(block)
 
-    const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
+    const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
     // Create new pool.
     pool = new Pool(id.toString())
 
     // Set relation
-    pool.owner = masterChef.id
+    pool.owner = swipeSwap.id
 
-    const poolInfo = masterChefContract.poolInfo(masterChef.poolCount)
+    const poolInfo = swipeSwapContract.poolInfo(swipeSwap.poolCount)
 
     pool.pair = poolInfo.value0
     pool.allocPoint = poolInfo.value1
@@ -180,16 +180,16 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
 }
 
 export function add(event: AddCall): void {
-  const masterChef = getMasterChef(event.block)
+  const swipeSwap = getSwipeSwap(event.block)
 
-  log.info('Add pool #{}', [masterChef.poolCount.toString()])
+  log.info('Add pool #{}', [swipeSwap.poolCount.toString()])
 
-  const pool = getPool(masterChef.poolCount, event.block)
+  const pool = getPool(swipeSwap.poolCount, event.block)
 
-  // Update MasterChef.
-  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(pool.allocPoint)
-  masterChef.poolCount = masterChef.poolCount.plus(BIG_INT_ONE)
-  masterChef.save()
+  // Update SwipeSwap.
+  swipeSwap.totalAllocPoint = swipeSwap.totalAllocPoint.plus(pool.allocPoint)
+  swipeSwap.poolCount = swipeSwap.poolCount.plus(BIG_INT_ONE)
+  swipeSwap.save()
 }
 
 // Calls
@@ -202,11 +202,11 @@ export function set(call: SetCall): void {
 
   const pool = getPool(call.inputs._pid, call.block)
 
-  const masterChef = getMasterChef(call.block)
+  const swipeSwap = getSwipeSwap(call.block)
 
-  // Update masterchef
-  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(call.inputs._allocPoint.minus(pool.allocPoint))
-  masterChef.save()
+  // Update swipeswap
+  swipeSwap.totalAllocPoint = swipeSwap.totalAllocPoint.plus(call.inputs._allocPoint.minus(pool.allocPoint))
+  swipeSwap.save()
 
   // Update pool
   pool.allocPoint = call.inputs._allocPoint
@@ -216,17 +216,17 @@ export function set(call: SetCall): void {
 export function setMigrator(call: SetMigratorCall): void {
   log.info('Set migrator to {}', [call.inputs._migrator.toHex()])
 
-  const masterChef = getMasterChef(call.block)
-  masterChef.migrator = call.inputs._migrator
-  masterChef.save()
+  const swipeSwap = getSwipeSwap(call.block)
+  swipeSwap.migrator = call.inputs._migrator
+  swipeSwap.save()
 }
 
 export function migrate(call: MigrateCall): void {
-  const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
+  const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
   const pool = getPool(call.inputs._pid, call.block)
 
-  const poolInfo = masterChefContract.poolInfo(call.inputs._pid)
+  const poolInfo = swipeSwapContract.poolInfo(call.inputs._pid)
 
   const pair = poolInfo.value0
 
@@ -234,7 +234,7 @@ export function migrate(call: MigrateCall): void {
 
   pool.pair = pair
 
-  const balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
+  const balance = pairContract.balanceOf(SWIPE_SWAP_ADDRESS)
 
   pool.balance = balance
 
@@ -248,8 +248,8 @@ export function massUpdatePools(call: MassUpdatePoolsCall): void {
 export function updatePool(call: UpdatePoolCall): void {
   log.info('Update pool id {}', [call.inputs._pid.toString()])
 
-  const masterChef = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
-  const poolInfo = masterChef.poolInfo(call.inputs._pid)
+  const swipeSwap = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
+  const poolInfo = swipeSwap.poolInfo(call.inputs._pid)
   const pool = getPool(call.inputs._pid, call.block)
   pool.lastRewardBlock = poolInfo.value2
   pool.accSwipePerShare = poolInfo.value3
@@ -259,11 +259,11 @@ export function updatePool(call: UpdatePoolCall): void {
 export function dev(call: DevCall): void {
   log.info('Dev changed to {}', [call.inputs._devaddr.toHex()])
 
-  const masterChef = getMasterChef(call.block)
+  const swipeSwap = getSwipeSwap(call.block)
 
-  masterChef.devaddr = call.inputs._devaddr
+  swipeSwap.devaddr = call.inputs._devaddr
 
-  masterChef.save()
+  swipeSwap.save()
 }
 
 // Events
@@ -283,16 +283,16 @@ export function deposit(event: Deposit): void {
   //   event.params.pid.toString(),
   // ])
 
-  const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
+  const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
-  const poolInfo = masterChefContract.poolInfo(event.params.pid)
+  const poolInfo = swipeSwapContract.poolInfo(event.params.pid)
 
   const pool = getPool(event.params.pid, event.block)
 
   const poolHistory = getPoolHistory(pool, event.block)
 
   const pairContract = PairContract.bind(poolInfo.value0)
-  pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
+  pool.balance = pairContract.balanceOf(SWIPE_SWAP_ADDRESS)
 
   pool.lastRewardBlock = poolInfo.value2
   pool.accSwipePerShare = poolInfo.value3
@@ -305,7 +305,7 @@ export function deposit(event: Deposit): void {
 
   pool.updatedAt = event.block.timestamp
 
-  const userInfo = masterChefContract.userInfo(event.params.pid, event.params.user)
+  const userInfo = swipeSwapContract.userInfo(event.params.pid, event.params.user)
 
   const user = getUser(event.params.pid, event.params.user, event.block)
 
@@ -316,7 +316,7 @@ export function deposit(event: Deposit): void {
   }
 
   // Calculate SWIPE being paid out
-  if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
+  if (event.block.number.gt(SWIPE_SWAP_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
       .times(pool.accSwipePerShare.toBigDecimal())
@@ -400,20 +400,20 @@ export function deposit(event: Deposit): void {
   user.save()
   pool.save()
 
-  const masterChef = getMasterChef(event.block)
+  const swipeSwap = getSwipeSwap(event.block)
 
-  const masterChefDays = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  masterChef.slpAge = masterChef.slpAge.plus(masterChefDays.times(masterChef.slpBalance))
+  const swipeSwapDays = event.block.timestamp.minus(swipeSwap.updatedAt).divDecimal(BigDecimal.fromString('86400'))
+  swipeSwap.slpAge = swipeSwap.slpAge.plus(swipeSwapDays.times(swipeSwap.slpBalance))
 
-  masterChef.slpDeposited = masterChef.slpDeposited.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.plus(amount)
+  swipeSwap.slpDeposited = swipeSwap.slpDeposited.plus(amount)
+  swipeSwap.slpBalance = swipeSwap.slpBalance.plus(amount)
 
-  masterChef.updatedAt = event.block.timestamp
-  masterChef.save()
+  swipeSwap.updatedAt = event.block.timestamp
+  swipeSwap.save()
 
-  const history = getHistory(MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
-  history.slpBalance = masterChef.slpBalance
+  const history = getHistory(SWIPE_SWAP_ADDRESS.toHex(), event.block)
+  history.slpAge = swipeSwap.slpAge
+  history.slpBalance = swipeSwap.slpBalance
   history.slpDeposited = history.slpDeposited.plus(amount)
   history.save()
 
@@ -440,16 +440,16 @@ export function withdraw(event: Withdraw): void {
   //   event.params.pid.toString(),
   // ])
 
-  const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
+  const swipeSwapContract = SwipeSwapContract.bind(SWIPE_SWAP_ADDRESS)
 
-  const poolInfo = masterChefContract.poolInfo(event.params.pid)
+  const poolInfo = swipeSwapContract.poolInfo(event.params.pid)
 
   const pool = getPool(event.params.pid, event.block)
 
   const poolHistory = getPoolHistory(pool, event.block)
 
   const pairContract = PairContract.bind(poolInfo.value0)
-  pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
+  pool.balance = pairContract.balanceOf(SWIPE_SWAP_ADDRESS)
   pool.lastRewardBlock = poolInfo.value2
   pool.accSwipePerShare = poolInfo.value3
 
@@ -464,7 +464,7 @@ export function withdraw(event: Withdraw): void {
 
   const user = getUser(event.params.pid, event.params.user, event.block)
 
-  if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
+  if (event.block.number.gt(SWIPE_SWAP_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
       .times(pool.accSwipePerShare.toBigDecimal())
@@ -491,7 +491,7 @@ export function withdraw(event: Withdraw): void {
     }
   }
 
-  const userInfo = masterChefContract.userInfo(event.params.pid, event.params.user)
+  const userInfo = swipeSwapContract.userInfo(event.params.pid, event.params.user)
 
   user.amount = userInfo.value0
   user.rewardDebt = userInfo.value1
@@ -549,23 +549,23 @@ export function withdraw(event: Withdraw): void {
   user.save()
   pool.save()
 
-  const masterChef = getMasterChef(event.block)
+  const swipeSwap = getSwipeSwap(event.block)
 
-  const days = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  const slpAge = masterChef.slpAge.plus(days.times(masterChef.slpBalance))
-  const slpAgeRemoved = slpAge.div(masterChef.slpBalance).times(amount)
-  masterChef.slpAge = slpAge.minus(slpAgeRemoved)
-  masterChef.slpAgeRemoved = masterChef.slpAgeRemoved.plus(slpAgeRemoved)
+  const days = event.block.timestamp.minus(swipeSwap.updatedAt).divDecimal(BigDecimal.fromString('86400'))
+  const slpAge = swipeSwap.slpAge.plus(days.times(swipeSwap.slpBalance))
+  const slpAgeRemoved = slpAge.div(swipeSwap.slpBalance).times(amount)
+  swipeSwap.slpAge = slpAge.minus(slpAgeRemoved)
+  swipeSwap.slpAgeRemoved = swipeSwap.slpAgeRemoved.plus(slpAgeRemoved)
 
-  masterChef.slpWithdrawn = masterChef.slpWithdrawn.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.minus(amount)
-  masterChef.updatedAt = event.block.timestamp
-  masterChef.save()
+  swipeSwap.slpWithdrawn = swipeSwap.slpWithdrawn.plus(amount)
+  swipeSwap.slpBalance = swipeSwap.slpBalance.minus(amount)
+  swipeSwap.updatedAt = event.block.timestamp
+  swipeSwap.save()
 
-  const history = getHistory(MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
+  const history = getHistory(SWIPE_SWAP_ADDRESS.toHex(), event.block)
+  history.slpAge = swipeSwap.slpAge
   history.slpAgeRemoved = history.slpAgeRemoved.plus(slpAgeRemoved)
-  history.slpBalance = masterChef.slpBalance
+  history.slpBalance = swipeSwap.slpBalance
   history.slpWithdrawn = history.slpWithdrawn.plus(amount)
   history.save()
 
@@ -587,7 +587,7 @@ export function emergencyWithdraw(event: EmergencyWithdraw): void {
   const pool = getPool(event.params.pid, event.block)
 
   const pairContract = PairContract.bind(pool.pair as Address)
-  pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
+  pool.balance = pairContract.balanceOf(SWIPE_SWAP_ADDRESS)
   pool.save()
 
   // Update user
