@@ -54,4 +54,6 @@ dataSources:
           handler: migrate
         - function: dev(address)
           handler: dev
+        - function: setSwipePerBlock(uint256)
+          handler: setSwipePerBlock
       file: ../src/swipeswap.ts

@@ -11,6 +11,7 @@ import {
   SetMigratorCall,
   UpdatePoolCall,
   Withdraw,
+  SetSwipePerBlockCall,
 } from '../generated/SwipeSwap/SwipeSwap'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import {
@@ -262,6 +263,16 @@ export function dev(call: DevCall): void {
   const swipeSwap = getSwipeSwap(call.block)
 
   swipeSwap.devaddr = call.inputs._devaddr
+
+  swipeSwap.save()
+}
+
+export function setSwipePerBlock(call: SetSwipePerBlockCall): void {
+  log.info('Change swipe per block to {}', [call.inputs.speed.toString()])
+
+  const swipeSwap = getSwipeSwap(call.block)
+
+  swipeSwap.swipePerBlock = call.inputs.speed
 
   swipeSwap.save()
 }
